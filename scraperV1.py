@@ -9,7 +9,11 @@ from selenium import webdriver
 
 import pandas as pd
 
+game = []
 answers = []
+clues = []
+clues.append(['clue'])
+answers.append(['answer'])
 
 driver = webdriver.Chrome()
 base_url = 'http://www.j-archive.com/showgame.php?game_id='
@@ -33,18 +37,20 @@ for round_type in rounds:
             clue_value = clue.text
             #clue_str = str(clue.find_element_by_class('clue_text'))
             print clue_value
+            clues.append(clue_value)
             
         
-
-#for div_e in driver.find_elements_by_tag_name('div'): 
-#    q_mess = div_e.get_attribute('onmouseover')
-#    try:
-#        q_string = str(q_mess.get_attribute('em'))
+driver.get(game_url)
+for div_e in driver.find_element_by_class_name('correct_response'):
+    print div_e
+                    #try:
+    #print q_mess
+#        q_string = q_mess.value
 #        answers.append(q_string)
 #        print q_string
 #    except AttributeError:
 #        print q_string
-    
+#    
 #for div_e in driver.find_elements_by_tag_name('div'): 
 #    q_mess = div_e.find_element_by_class_name('em.correct answer')
 #    print q_mess
