@@ -38,11 +38,90 @@ for round_type in rounds:
             #clue_str = str(clue.find_element_by_class('clue_text'))
             print clue_value
             clues.append(clue_value)
-            
-        
-driver.get(game_url)
-for div_e in driver.find_element_by_class_name('correct_response'):
-    print div_e
+
+rounds_longform = ['jeopardy_round', 'double_jeopardy_round', 'final_jeopardy_round']
+
+"""
+NOTE: There are some blank questions I think? So make sure there is an error
+exception handle for those cases.
+
+Structure of question/answer format in HTML
+column,row
+
+1. Round 1
+    1. div id="jeopardy_round"
+        1. table class="round"
+            1. tbody
+                1. tr - Leads to Category Names
+                    1. td class="category"
+                        1. table
+                            1. tbody
+                                1. tr - Leads to category name in column 1
+                                    1. td class"category_name"
+                2. tr - Leads to answer/clue in row 1
+                    1. td class="clue"
+                        1. table
+                            1. tbody
+                                1. tr
+                                    1. td - Leads to question in column 1
+                                        1. dov onmouseover="toggle...
+                3. tr - Leads to answer/clue in row 2
+                    1. td class="clue"
+                        1. table
+                            1. tbody
+                                1. tr
+                                    1. td - Leads to question in column 1
+                                        1. dov onmouseover="toggle...
+                4. tr - Leads to answer/clue in row 3
+                    1. td class="clue"
+                        1. table
+                            1. tbody
+                                1. tr
+                                    1. td - Leads to question in column 1
+                                        1. dov onmouseover="toggle...
+                5. tr - Leads to answer/clue in row 4
+                    1. td class="clue"
+                        1. table
+                            1. tbody
+                                1. tr
+                                    1. td  - Leads to question in column 1
+                                        1. dov onmouseover="toggle...
+                6. tr - Leads to answer/clue in row 5
+                    1. td class="clue"
+                        1. table
+                            1. tbody
+                                1. tr
+                                    1. td - Leads to question in column 1
+                                        1. dov onmouseover="toggle...
+2. Round 2
+3. Round 3
+"""
+
+i = 1 # table iterator
+j = 2 # first tr iterator
+n = 2 # td iterator
+m = 1 # second tr iterator
+data =  driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/div').get_attribute('outerHTML')#.text#.get_attribute('innerHTML')
+print data
+#data =  driver.find_elements_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[1]')
+
+
+#for div_e in driver.find_element_by_class_name('correct_response'):
+i = 0
+#for data in driver.find_element_by_class_name("clue").text:
+#    print data
+#    print i
+#    i = i + 1
+    
+#for data in driver.find_elements_by_tag_name("table"):
+#    em = data.find_element_by_partial_link_text('div onmouseover')
+#    print em
+#    i = i + 1
+    
+
+
+
+       # print 'hey'
                     #try:
     #print q_mess
 #        q_string = q_mess.value
