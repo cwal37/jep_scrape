@@ -103,6 +103,13 @@ n = 2 # td iterator
 m = 1 # second tr iterator
 data =  driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/div').get_attribute('outerHTML')#.text#.get_attribute('innerHTML')
 print data
+#cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/table/tbody/tr[1]/td').text
+
+
+
+for i in range(1,7):
+    cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
+    print cat_name
 #data =  driver.find_elements_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[1]')
 
 
