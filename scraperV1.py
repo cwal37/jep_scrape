@@ -18,7 +18,7 @@ answers.append(['answer'])
 driver = webdriver.Chrome()
 base_url = 'http://www.j-archive.com/showgame.php?game_id='
 #for i in range(1,5162):
-game_url = base_url + str(1)
+game_url = base_url + str(5162)
 driver.get(game_url)
     
 """
@@ -37,7 +37,7 @@ for round_type in rounds:
             clue_value = clue.text
             #clue_str = str(clue.find_element_by_class('clue_text'))
             print clue_value
-            clues.append(clue_value)
+            clues.append([clue_value])
 
 rounds_longform = ['jeopardy_round', 'double_jeopardy_round', 'final_jeopardy_round']
 
@@ -97,19 +97,27 @@ column,row
 3. Round 3
 """
 
+cat_names = []
+# use sdata = str(data) to get a string
+# then use ans_start = sdata.find('correct_response') to get the start of that string
+# and ans_end = sdata.find('</em>') to find the end of the answer string
+# from there you can do ans_str = sdata[ans_start+23:ans_end]
+# could also iterate through for questions in this manner
+# just need to finalize the tr/td i/j looping structure and we should be in business
 i = 1 # table iterator
 j = 2 # first tr iterator
 n = 2 # td iterator
 m = 1 # second tr iterator
-data =  driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/div').get_attribute('outerHTML')#.text#.get_attribute('innerHTML')
-print data
+for j in range(2,7):
+    data =  driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/div').get_attribute('outerHTML')
+    print data
 #cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/table/tbody/tr[1]/td').text
 
 
 
 for i in range(1,7):
     cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
-    print cat_name
+    cat_names.append(cat_name)
 #data =  driver.find_elements_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[1]')
 
 
