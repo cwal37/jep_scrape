@@ -6,7 +6,7 @@ Created on Wed Nov 25 09:48:40 2015
 """
 
 from selenium import webdriver
-
+import pdb
 import pandas as pd
 
 game = []
@@ -30,16 +30,17 @@ clue_DJ_3_2 = double jeopardy, column 3, clue 2
 rounds = ['J', 'DJ']
 
 for round_type in rounds:
+    #pdb.set_trace()
     for i in range(1,7):
         for j in range(1,6):
             clue_id = 'clue_'+round_type+'_'+str(i)+'_'+str(j)
             clue = driver.find_element_by_id(clue_id)
             clue_value = clue.text
             #clue_str = str(clue.find_element_by_class('clue_text'))
-            print clue_value
+            #print clue_value
             clues.append([clue_value])
 
-rounds_longform = ['jeopardy_round', 'double_jeopardy_round', 'final_jeopardy_round']
+
 
 """
 NOTE: There are some blank questions I think? So make sure there is an error
@@ -104,25 +105,36 @@ cat_names = []
 # from there you can do ans_str = sdata[ans_start+23:ans_end]
 # could also iterate through for questions in this manner
 # just need to finalize the tr/td i/j looping structure and we should be in business
-i = 1 # table iterator
-j = 2 # first tr iterator
-n = 2 # td iterator
-m = 1 # second tr iterator
-for j in range(2,7):
-    data =  driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/div').get_attribute('outerHTML')
-    print data
+
+rounds_longform = ['jeopardy_round', 'double_jeopardy_round']#, 'final_jeopardy_round']
+for jround in rounds_longform:
+    for j in range(2,6):
+        for i in range(1,7):
+        
+            data =  driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr['+str(j)+']/td['+str(i)+']/table/tbody/tr[1]/td/div').get_attribute('outerHTML')
+            #print data
+            #sdata = str(data)
+            ans_start = data.find('correct_response')+23
+            #print sdata
+            ans_end = data.find('</em>')
+            ans_uni = data[ans_start:ans_end]
+            ans_str = str(ans_uni)
+            answers.append([ans_str])
+         
+    #print data
+print answers
 #cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/table/tbody/tr[1]/td').text
-
-
 
 for i in range(1,7):
     cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
     cat_names.append(cat_name)
+
+
+driver.close()
+driver.quit()
+
 #data =  driver.find_elements_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[1]')
-
-
 #for div_e in driver.find_element_by_class_name('correct_response'):
-i = 0
 #for data in driver.find_element_by_class_name("clue").text:
 #    print data
 #    print i
@@ -132,10 +144,6 @@ i = 0
 #    em = data.find_element_by_partial_link_text('div onmouseover')
 #    print em
 #    i = i + 1
-    
-
-
-
        # print 'hey'
                     #try:
     #print q_mess
@@ -154,13 +162,3 @@ i = 0
 #        print q_string
 #    except AttributeError:
 #        print q_string  
-
-driver.close()
-driver.quit()
-
-
-    
-    
-
-        
-    
