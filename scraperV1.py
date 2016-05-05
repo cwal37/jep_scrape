@@ -9,39 +9,6 @@ from selenium import webdriver
 import pdb
 import pandas as pd
 
-game = []
-answers = []
-clues = []
-clues.append(['clue'])
-answers.append(['answer'])
-
-driver = webdriver.Chrome()
-base_url = 'http://www.j-archive.com/showgame.php?game_id='
-#for i in range(1,5162):
-game_url = base_url + str(5162)
-driver.get(game_url)
-    
-"""
-id structure
-clue_J_2_1 = jeopardy, column 2, clue 1
-clue_DJ_3_2 = double jeopardy, column 3, clue 2
-"""
-
-rounds = ['J', 'DJ']
-
-for round_type in rounds:
-    #pdb.set_trace()
-    for i in range(1,7):
-        for j in range(1,6):
-            clue_id = 'clue_'+round_type+'_'+str(i)+'_'+str(j)
-            clue = driver.find_element_by_id(clue_id)
-            clue_value = clue.text
-            #clue_str = str(clue.find_element_by_class('clue_text'))
-            #print clue_value
-            clues.append([clue_value])
-
-
-
 """
 NOTE: There are some blank questions I think? So make sure there is an error
 exception handle for those cases.
@@ -96,9 +63,53 @@ column,row
                                         1. dov onmouseover="toggle...
 2. Round 2
 3. Round 3
+
+id structure
+clue_J_2_1 = jeopardy, column 2, clue 1
+clue_DJ_3_2 = double jeopardy, column 3, clue 2
 """
 
+game = []
+answers = []
+clues = []
+
+driver = webdriver.Chrome()
+base_url = 'http://www.j-archive.com/showgame.php?game_id='
+#for g_id in range(1,5162):
+g_id = 5162
+game_url = base_url + str(5162)
+driver.get(game_url)
+    
+
+
+rounds = ['J', 'DJ']
+
+for round_type in rounds:
+    for i in range(1,7):
+        for j in range(1,6):
+            clue_id = 'clue_'+round_type+'_'+str(i)+'_'+str(j)
+            clue = driver.find_element_by_id(clue_id)
+            clue_value = clue.text
+            clues.append(clue_value)
+clue_length = len(clues)
+game_id = []
+rounds_longform = ['jeopardy_round', 'double_jeopardy_round']#, 'final_jeopardy_round']
 cat_names = []
+for jround in rounds_longform:
+    for i in range(1,7):
+        cat_name = driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
+        cat_names.append(cat_name)
+
+categories = []
+for cat in cat_names:
+    for i in range(0,5):
+        categories.append(cat)
+
+for i in range(0,clue_length):
+    game_id.append(g_id)
+    
+
+
 # use sdata = str(data) to get a string
 # then use ans_start = sdata.find('correct_response') to get the start of that string
 # and ans_end = sdata.find('</em>') to find the end of the answer string
@@ -106,11 +117,12 @@ cat_names = []
 # could also iterate through for questions in this manner
 # just need to finalize the tr/td i/j looping structure and we should be in business
 
-rounds_longform = ['jeopardy_round', 'double_jeopardy_round']#, 'final_jeopardy_round']
+
 for jround in rounds_longform:
-    for j in range(2,6):
-        for i in range(1,7):
-        
+    for i in range(1,7):
+        for j in range(2,7):
+            current_xpath = '//*[@id="'+jround+'"]/table[1]/tbody/tr['+str(j)+']/td['+str(i)+']/table/tbody/tr[1]/td/div'
+            print current_xpath
             data =  driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr['+str(j)+']/td['+str(i)+']/table/tbody/tr[1]/td/div').get_attribute('outerHTML')
             #print data
             #sdata = str(data)
@@ -119,46 +131,21 @@ for jround in rounds_longform:
             ans_end = data.find('</em>')
             ans_uni = data[ans_start:ans_end]
             ans_str = str(ans_uni)
-            answers.append([ans_str])
-         
-    #print data
-print answers
-#cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/table/tbody/tr[1]/td').text
+            answers.append(ans_str)
 
-for i in range(1,7):
-    cat_name = driver.find_element_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
-    cat_names.append(cat_name)
 
 
 driver.close()
 driver.quit()
 
-#data =  driver.find_elements_by_xpath('//*[@id="jeopardy_round"]/table[1]/tbody/tr[2]/td[1]')
-#for div_e in driver.find_element_by_class_name('correct_response'):
-#for data in driver.find_element_by_class_name("clue").text:
-#    print data
-#    print i
-#    i = i + 1
-    
-#for data in driver.find_elements_by_tag_name("table"):
-#    em = data.find_element_by_partial_link_text('div onmouseover')
-#    print em
-#    i = i + 1
-       # print 'hey'
-                    #try:
-    #print q_mess
-#        q_string = q_mess.value
-#        answers.append(q_string)
-#        print q_string
-#    except AttributeError:
-#        print q_string
-#    
-#for div_e in driver.find_elements_by_tag_name('div'): 
-#    q_mess = div_e.find_element_by_class_name('em.correct answer')
-#    print q_mess
-#    try:
-#        q_string = str(q_mess.get_attribute('em'))
-#        answers.append(q_string)
-#        print q_string
-#    except AttributeError:
-#        print q_string  
+clues_series = pd.Series(clues)
+answers_series = pd.Series(answers)
+
+games = pd.DataFrame(clues_series, columns=['Clues'])
+
+games['Answers'] = answers_series
+
+games['G_ID'] = game_id
+games['Category'] = categories
+
+games.to_excel('proof_of_concept.xls')
