@@ -9,6 +9,7 @@ from selenium import webdriver
 import pdb
 import pandas as pd
 from selenium.common.exceptions import NoSuchElementException
+import time
 
 """
 NOTE: There are some blank questions I think? So make sure there is an error
@@ -76,40 +77,45 @@ clues = []
 categories = []
 game_id = []
 rounds_longform = ['jeopardy_round', 'double_jeopardy_round']#, 'final_jeopardy_round']
-cat_names = []
+
 
 driver = webdriver.Chrome()
 base_url = 'http://www.j-archive.com/showgame.php?game_id='
-for g_id in range(1,5162):
+total_time = 0
+for g_id in range(1,5163):
+    start = time.clock()
     game_url = base_url + str(g_id)
     driver.get(game_url)
-
+    cat_names = []
     rounds = ['J', 'DJ']
     
     for round_type in rounds:
         for i in range(1,7):
             for j in range(1,6):
                 clue_id = 'clue_'+round_type+'_'+str(i)+'_'+str(j)
-                print clue_id
+                #print clue_id
                 try:
                     clue = driver.find_element_by_id(clue_id)
                     clue_value = clue.text
                     clues.append(clue_value)
                 except NoSuchElementException:
                     clues.append('MISSING CLUE')
-    clue_length = len(clues)
+    #clue_length = 60
     
     
     for jround in rounds_longform:
         for i in range(1,7):
-            cat_name = driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
-            cat_names.append(cat_name)
+            try:
+                cat_name = driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
+                cat_names.append(cat_name)
+            except NoSuchElementException:
+                cat_names.append('NO GAME')
     
     for cat in cat_names:
         for i in range(0,5):
             categories.append(cat)
     
-    for i in range(0,clue_length):
+    for i in range(0,60):
         game_id.append(g_id)
     
     # use sdata = str(data) to get a string
@@ -138,6 +144,9 @@ for g_id in range(1,5162):
                     answers.append(ans_uni)
                 except NoSuchElementException:
                     answers.append('MISSING CLUE')
+    end = time.clock()
+    total_time = total_time+(end-start)
+    print(total_time)
     
 driver.close()
 driver.quit()
