@@ -8,6 +8,7 @@ Created on Wed Nov 25 09:48:40 2015
 from selenium import webdriver
 import pdb
 import pandas as pd
+from selenium.common.exceptions import NoSuchElementException
 
 """
 NOTE: There are some blank questions I think? So make sure there is an error
@@ -72,69 +73,72 @@ clue_DJ_3_2 = double jeopardy, column 3, clue 2
 game = []
 answers = []
 clues = []
-
-driver = webdriver.Chrome()
-base_url = 'http://www.j-archive.com/showgame.php?game_id='
-#for g_id in range(1,5162):
-g_id = 5162
-game_url = base_url + str(5162)
-driver.get(game_url)
-    
-
-
-rounds = ['J', 'DJ']
-
-for round_type in rounds:
-    for i in range(1,7):
-        for j in range(1,6):
-            clue_id = 'clue_'+round_type+'_'+str(i)+'_'+str(j)
-            clue = driver.find_element_by_id(clue_id)
-            clue_value = clue.text
-            clues.append(clue_value)
-clue_length = len(clues)
+categories = []
 game_id = []
 rounds_longform = ['jeopardy_round', 'double_jeopardy_round']#, 'final_jeopardy_round']
 cat_names = []
-for jround in rounds_longform:
-    for i in range(1,7):
-        cat_name = driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
-        cat_names.append(cat_name)
 
-categories = []
-for cat in cat_names:
-    for i in range(0,5):
-        categories.append(cat)
+driver = webdriver.Chrome()
+base_url = 'http://www.j-archive.com/showgame.php?game_id='
+for g_id in range(1,5162):
+    game_url = base_url + str(g_id)
+    driver.get(game_url)
 
-for i in range(0,clue_length):
-    game_id.append(g_id)
+    rounds = ['J', 'DJ']
     
-
-
-# use sdata = str(data) to get a string
-# then use ans_start = sdata.find('correct_response') to get the start of that string
-# and ans_end = sdata.find('</em>') to find the end of the answer string
-# from there you can do ans_str = sdata[ans_start+23:ans_end]
-# could also iterate through for questions in this manner
-# just need to finalize the tr/td i/j looping structure and we should be in business
-
-
-for jround in rounds_longform:
-    for i in range(1,7):
-        for j in range(2,7):
-            current_xpath = '//*[@id="'+jround+'"]/table[1]/tbody/tr['+str(j)+']/td['+str(i)+']/table/tbody/tr[1]/td/div'
-            print current_xpath
-            data =  driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr['+str(j)+']/td['+str(i)+']/table/tbody/tr[1]/td/div').get_attribute('outerHTML')
-            #print data
-            #sdata = str(data)
-            ans_start = data.find('correct_response')+23
-            #print sdata
-            ans_end = data.find('</em>')
-            ans_uni = data[ans_start:ans_end]
-            ans_str = str(ans_uni)
-            answers.append(ans_str)
-
-
-
+    for round_type in rounds:
+        for i in range(1,7):
+            for j in range(1,6):
+                clue_id = 'clue_'+round_type+'_'+str(i)+'_'+str(j)
+                print clue_id
+                try:
+                    clue = driver.find_element_by_id(clue_id)
+                    clue_value = clue.text
+                    clues.append(clue_value)
+                except NoSuchElementException:
+                    clues.append('MISSING CLUE')
+    clue_length = len(clues)
+    
+    
+    for jround in rounds_longform:
+        for i in range(1,7):
+            cat_name = driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr[1]/td['+str(i)+']/table/tbody/tr[1]/td').text
+            cat_names.append(cat_name)
+    
+    for cat in cat_names:
+        for i in range(0,5):
+            categories.append(cat)
+    
+    for i in range(0,clue_length):
+        game_id.append(g_id)
+    
+    # use sdata = str(data) to get a string
+    # then use ans_start = sdata.find('correct_response') to get the start of that string
+    # and ans_end = sdata.find('</em>') to find the end of the answer string
+    # from there you can do ans_str = sdata[ans_start+23:ans_end]
+    # could also iterate through for questions in this manner
+    # just need to finalize the tr/td i/j looping structure and we should be in business
+    
+    
+    for jround in rounds_longform:
+        for i in range(1,7):
+            for j in range(2,7):
+                #current_xpath = '//*[@id="'+jround+'"]/table[1]/tbody/tr['+str(j)+']/td['+str(i)+']/table/tbody/tr[1]/td/div'
+                #print current_xpath
+                try:
+                    data =  driver.find_element_by_xpath('//*[@id="'+jround+'"]/table[1]/tbody/tr['+str(j)+']/td['+str(i)+']/table/tbody/tr[1]/td/div').get_attribute('outerHTML')
+                    #print data
+                    #sdata = str(data)
+                    ans_start = data.find('correct_response')+23
+                    #print sdata
+                    ans_end = data.find('</em>')
+                    ans_uni = data[ans_start:ans_end]
+                    #print ans_uni
+                    #ans_str = str(ans_uni)
+                    answers.append(ans_uni)
+                except NoSuchElementException:
+                    answers.append('MISSING CLUE')
+    
 driver.close()
 driver.quit()
 
@@ -148,4 +152,4 @@ games['Answers'] = answers_series
 games['G_ID'] = game_id
 games['Category'] = categories
 
-games.to_excel('proof_of_concept.xls')
+games.to_excel('proof_of_concept2.xls')
