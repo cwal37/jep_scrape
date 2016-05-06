@@ -161,4 +161,4 @@ games['Answers'] = answers_series
 games['G_ID'] = game_id
 games['Category'] = categories
 
-games.to_excel('proof_of_concept2.xls')
+games.to_excel('proof_of_concept2.xlsx')
