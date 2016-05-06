@@ -1,300 +1,151 @@
 Rank,City,State,Population
-1,New York,New York,8491079.00
-2,Los Angeles,California,3928864.00
-3,Chicago,Illinois,2722389.00
-4,Houston,Texas,2239558.00
-5,Philadelphia,Pennsylvania,1560297.00
-6,Phoenix,Arizona,1537058.00
-7,San Antonio,Texas,1436697.00
-8,San Diego,California,1381069.00
-9,Dallas,Texas,1281047.00
-10,San Jose,California,1015785.00
-11,Austin,Texas,912791.00
-12,Jacksonville,Florida,853382.00
-13,San Francisco,California,852469.00
-14,Indianapolis,Indiana,848788.00
-15,Columbus,Ohio,835957.00
-16,Fort Worth,Texas,812238.00
-17,Charlotte,North Carolina,809958.00
-18,Detroit,Michigan,680250.00
-19,El Paso,Texas,679036.00
-20,Seattle,Washington,668342.00
-21,Denver,Colorado,663862.00
-22,Washington,District of Columbia,658893.00
-23,Memphis,Tennessee,656861.00
-24,Boston,Massachusetts,655884.00
-25,Nashville,Tennessee,644014.00
-26,Baltimore,Maryland,622793.00
-27,Oklahoma City,Oklahoma,620602.00
-28,Portland,Oregon,619360.00
-29,Las Vegas,Nevada,613599.00
-30,Louisville,Kentucky,612780.00
-31,Milwaukee,Wisconsin,599642.00
-32,Albuquerque,New Mexico,557169.00
-33,Tucson,Arizona,527972.00
-34,Fresno,California,515986.00
-35,Sacramento,California,485199.00
-36,Long Beach,California,473577.00
-37,Kansas City,Missouri,470800.00
-38,Mesa,Arizona,464704.00
-39,Atlanta,Georgia,456002.00
-40,Virginia Beach,Virginia,450980.00
-41,Omaha,Nebraska,446599.00
-42,Colorado Springs,Colorado,445830.00
-43,Raleigh,North Carolina,439896.00
-44,Miami,Florida,430332.00
-45,Oakland,California,413775.00
-46,Minneapolis,Minnesota,407207.00
-47,Tulsa,Oklahoma,399682.00
-48,Cleveland,Ohio,389521.00
-49,Wichita,Kansas,388413.00
-50,New Orleans,Louisiana,384320.00
-51,Arlington,Texas,383204.00
-52,Bakersfield,California,368759.00
-53,Tampa,Florida,358699.00
-54,Aurora,Colorado,353108.00
-55,Honolulu,Hawai'i,350399.00
-56,Anaheim,California,346997.00
-57,Santa Ana,California,334909.00
-58,Corpus Christi,Texas,320434.00
-59,Riverside,California,319504.00
-60,St. Louis,Missouri,317419.00
-61,Lexington,Kentucky,310797.00
-62,Pittsburgh,Pennsylvania,305412.00
-63,Stockton,California,302389.00
-64,Anchorage,Alaska,301010.00
-65,Cincinnati,Ohio,298165.00
-66,Saint Paul,Minnesota,297640.00
-67,Greensboro,North Carolina,282586.00
-68,Toledo,Ohio,281031.00
-69,Newark,New Jersey,280579.00
-70,Plano,Texas,278480.00
-71,Henderson,Nevada,277440.00
-72,Lincoln,Nebraska,272996.00
-73,Orlando,Florida,262372.00
-74,Jersey City,New Jersey,262146.00
-75,Chula Vista,California,260988.00
-76,Buffalo,New York,258703.00
-77,Fort Wayne,Indiana,258522.00
-78,Chandler,Arizona,254276.00
-79,St. Petersburg,Florida,253693.00
-80,Laredo,Texas,252309.00
-81,Durham,North Carolina,251893.00
-82,Irvine,California,248531.00
-83,Madison,Wisconsin,245691.00
-84,Norfolk,Virginia,245428.00
-85,Lubbock,Texas,243839.00
-86,Gilbert,Arizona,239277.00
-87,Winston–Salem,North Carolina,239269.00
-88,Glendale,Arizona,237517.00
-89,Reno,Nevada,236995.00
-90,Hialeah,Florida,235563.00
-91,Garland,Texas,235501.00
-92,Chesapeake,Virginia,233371.00
-93,Irving,Texas,232406.00
-94,North Las Vegas,Nevada,230788.00
-95,Scottsdale,Arizona,230512.00
-96,Baton Rouge,Louisiana,228895.00
-97,Fremont,California,228758.00
-98,Richmond,Virginia,217853.00
-99,Boise,Idaho,216282.00
-100,San Bernardino,California,215213.00
-101,Birmingham,Alabama,212247.00
-102,Spokane,Washington,212052.00
-103,Rochester,New York,209983.00
-104,Modesto,California,209286.00
-105,Des Moines,Iowa,209220.00
-106,Oxnard,California,205437.00
-107,Tacoma,Washington,205159.00
-108,Fontana,California,204950.00
-109,Fayetteville,North Carolina,203948.00
-110,Moreno Valley,California,202976.00
-111,Columbus,Georgia,200887.00
-112,Huntington Beach,California,200809.00
-113,Yonkers,New York,200667.00
-114,Montgomery,Alabama,200481.00
-115,Aurora,Illinois,200456.00
-116,Glendale,California,200167.00
-117,Shreveport,Louisiana,198242.00
-118,Akron,Ohio,197859.00
-119,Little Rock,Arkansas,197706.00
-120,Amarillo,Texas,197254.00
-121,Augusta,Georgia,196741.00
-122,Mobile,Alabama,194675.00
-123,Grand Rapids,Michigan,193792.00
-124,Salt Lake City,Utah,190884.00
-125,Huntsville,Alabama,188226.00
-126,Tallahassee,Florida,188107.00
-127,Grand Prairie,Texas,185453.00
-128,Overland Park,Kansas,184525.00
-129,Knoxville,Tennessee,184281.00
-130,Brownsville,Texas,183046.00
-131,Worcester,Massachusetts,183016.00
-132,Newport News,Virginia,182965.00
-133,Santa Clarita,California,181557.00
-134,Providence,Rhode Island,179154.00
-135,Fort Lauderdale,Florida,176013.00
-136,Garden Grove,California,175078.00
-137,Oceanside,California,174558.00
-138,Rancho Cucamonga,California,174305.00
-139,Santa Rosa,California,174170.00
-140,Port St. Lucie,Florida,174110.00
-141,Chattanooga,Tennessee,173778.00
-142,Tempe,Arizona,172816.00
-143,Jackson,Mississippi,171155.00
-144,Cape Coral,Florida,169854.00
-145,Vancouver,Washington,169294.00
-146,Ontario,California,169089.00
-147,Sioux Falls,South Dakota,168586.00
-148,Peoria,Arizona,166934.00
-149,Springfield,Missouri,165378.00
-150,Pembroke Pines,Florida,164626.00
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
+1,New York,New York,8491079
+2,Los Angeles,California,3928864
+3,Chicago,Illinois,2722389
+4,Houston,Texas,2239558
+5,Philadelphia,Pennsylvania,1560297
+6,Phoenix,Arizona,1537058
+7,San Antonio,Texas,1436697
+8,San Diego,California,1381069
+9,Dallas,Texas,1281047
+10,San Jose,California,1015785
+11,Austin,Texas,912791
+12,Jacksonville,Florida,853382
+13,San Francisco,California,852469
+14,Indianapolis,Indiana,848788
+15,Columbus,Ohio,835957
+16,Fort Worth,Texas,812238
+17,Charlotte,North Carolina,809958
+18,Detroit,Michigan,680250
+19,El Paso,Texas,679036
+20,Seattle,Washington,668342
+21,Denver,Colorado,663862
+22,Washington,District of Columbia,658893
+23,Memphis,Tennessee,656861
+24,Boston,Massachusetts,655884
+25,Nashville,Tennessee,644014
+26,Baltimore,Maryland,622793
+27,Oklahoma City,Oklahoma,620602
+28,Portland,Oregon,619360
+29,Las Vegas,Nevada,613599
+30,Louisville,Kentucky,612780
+31,Milwaukee,Wisconsin,599642
+32,Albuquerque,New Mexico,557169
+33,Tucson,Arizona,527972
+34,Fresno,California,515986
+35,Sacramento,California,485199
+36,Long Beach,California,473577
+37,Kansas City,Missouri,470800
+38,Mesa,Arizona,464704
+39,Atlanta,Georgia,456002
+40,Virginia Beach,Virginia,450980
+41,Omaha,Nebraska,446599
+42,Colorado Springs,Colorado,445830
+43,Raleigh,North Carolina,439896
+44,Miami,Florida,430332
+45,Oakland,California,413775
+46,Minneapolis,Minnesota,407207
+47,Tulsa,Oklahoma,399682
+48,Cleveland,Ohio,389521
+49,Wichita,Kansas,388413
+50,New Orleans,Louisiana,384320
+51,Arlington,Texas,383204
+52,Bakersfield,California,368759
+53,Tampa,Florida,358699
+54,Aurora,Colorado,353108
+55,Honolulu,Hawai'i,350399
+56,Anaheim,California,346997
+57,Santa Ana,California,334909
+58,Corpus Christi,Texas,320434
+59,Riverside,California,319504
+60,St. Louis,Missouri,317419
+61,Lexington,Kentucky,310797
+62,Pittsburgh,Pennsylvania,305412
+63,Stockton,California,302389
+64,Anchorage,Alaska,301010
+65,Cincinnati,Ohio,298165
+66,Saint Paul,Minnesota,297640
+67,Greensboro,North Carolina,282586
+68,Toledo,Ohio,281031
+69,Newark,New Jersey,280579
+70,Plano,Texas,278480
+71,Henderson,Nevada,277440
+72,Lincoln,Nebraska,272996
+73,Orlando,Florida,262372
+74,Jersey City,New Jersey,262146
+75,Chula Vista,California,260988
+76,Buffalo,New York,258703
+77,Fort Wayne,Indiana,258522
+78,Chandler,Arizona,254276
+79,St. Petersburg,Florida,253693
+80,Laredo,Texas,252309
+81,Durham,North Carolina,251893
+82,Irvine,California,248531
+83,Madison,Wisconsin,245691
+84,Norfolk,Virginia,245428
+85,Lubbock,Texas,243839
+86,Gilbert,Arizona,239277
+87,Winston–Salem,North Carolina,239269
+88,Glendale,Arizona,237517
+89,Reno,Nevada,236995
+90,Hialeah,Florida,235563
+91,Garland,Texas,235501
+92,Chesapeake,Virginia,233371
+93,Irving,Texas,232406
+94,North Las Vegas,Nevada,230788
+95,Scottsdale,Arizona,230512
+96,Baton Rouge,Louisiana,228895
+97,Fremont,California,228758
+98,Richmond,Virginia,217853
+99,Boise,Idaho,216282
+100,San Bernardino,California,215213
+101,Birmingham,Alabama,212247
+102,Spokane,Washington,212052
+103,Rochester,New York,209983
+104,Modesto,California,209286
+105,Des Moines,Iowa,209220
+106,Oxnard,California,205437
+107,Tacoma,Washington,205159
+108,Fontana,California,204950
+109,Fayetteville,North Carolina,203948
+110,Moreno Valley,California,202976
+111,Columbus,Georgia,200887
+112,Huntington Beach,California,200809
+113,Yonkers,New York,200667
+114,Montgomery,Alabama,200481
+115,Aurora,Illinois,200456
+116,Glendale,California,200167
+117,Shreveport,Louisiana,198242
+118,Akron,Ohio,197859
+119,Little Rock,Arkansas,197706
+120,Amarillo,Texas,197254
+121,Augusta,Georgia,196741
+122,Mobile,Alabama,194675
+123,Grand Rapids,Michigan,193792
+124,Salt Lake City,Utah,190884
+125,Huntsville,Alabama,188226
+126,Tallahassee,Florida,188107
+127,Grand Prairie,Texas,185453
+128,Overland Park,Kansas,184525
+129,Knoxville,Tennessee,184281
+130,Brownsville,Texas,183046
+131,Worcester,Massachusetts,183016
+132,Newport News,Virginia,182965
+133,Santa Clarita,California,181557
+134,Providence,Rhode Island,179154
+135,Fort Lauderdale,Florida,176013
+136,Garden Grove,California,175078
+137,Oceanside,California,174558
+138,Rancho Cucamonga,California,174305
+139,Santa Rosa,California,174170
+140,Port St. Lucie,Florida,174110
+141,Chattanooga,Tennessee,173778
+142,Tempe,Arizona,172816
+143,Jackson,Mississippi,171155
+144,Cape Coral,Florida,169854
+145,Vancouver,Washington,169294
+146,Ontario,California,169089
+147,Sioux Falls,South Dakota,168586
+148,Peoria,Arizona,166934
+149,Springfield,Missouri,165378
+150,Pembroke Pines,Florida,164626
