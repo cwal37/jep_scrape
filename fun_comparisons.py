@@ -74,8 +74,8 @@ city_results['total_mentions'] = city_results['Answers'] + city_results['Clues']
 
 
 cres = city_results.sort_values(by = 'total_mentions', ascending=False)
-
-pop10 = city_results[city_results['pop_rank'] <=10]
+pop10 = cres[0:10]
+#pop10 = city_results[city_results['pop_rank'] <=10]
 
 ind = np.arange(10)
 fig, ax1 = plt.subplots()
@@ -86,12 +86,15 @@ ax1.bar(ind, pop10['Categories'], bottom = pop10['Answers']+pop10['Clues'], colo
 
 plt.xlabel('Cities')
 plt.ylabel('Number of Mentions')
-plt.xticks(ind, pop10['City'], rotation=60)
+cities = list(pop10['City'])
+cities = [str(x) for x in cities]
+y = [x+0.25 for x in ind]
+plt.xticks(y, cities, rotation=60)
 #plt.ylim(0,4000)
 
 ax2 = ax1.twinx()
 z = [x+0.5 for x in ind]
-ax2.plot(z, pop10['pop']/1000000, label = 'Population', linewidth = 4, color = plt.rcParams['axes.color_cycle'][3])
+ax2.plot(z, pop10['pop']/1000000, label = 'Population', linewidth = 4, color = plt.rcParams['axes.color_cycle'][4])
 ax2.set_ylabel('Population in Millions')
 
 ax1.set_yticks(np.linspace(ax1.get_ybound()[0], ax1.get_ybound()[1], 5))
@@ -105,9 +108,9 @@ ax1.legend(h1+h2, l1+l2, loc=1)
 
 plt.gcf().subplots_adjust(bottom=0.24)
 
-plt.title('Mentions of 10 most Populous US Cities in Jeopardy (1983-2016)')
+plt.title('10 Most Mentioned US Cities in Jeopardy (1983-2016)')
 #plt.show()
-plt.savefig('pop10cities.png', dpi=500)
+plt.savefig('top10cities.png', dpi=500)
 
 
 
