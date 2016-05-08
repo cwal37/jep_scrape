@@ -68,51 +68,126 @@ def jep_city_word_count():
 #jep_city_word_count()
 
 
-city_results = pd.read_csv('city_results.csv', skiprows=1)
+    city_results = pd.read_csv('city_results.csv', skiprows=1)
+    
+    city_results['total_mentions'] = city_results['Answers'] + city_results['Clues']  + city_results['Categories'] 
+    
+    
+    cres = city_results.sort_values(by = 'total_mentions', ascending=False)
+    pop10 = cres[0:10]
+    #pop10 = city_results[city_results['pop_rank'] <=10]
+    
+    ind = np.arange(10)
+    fig, ax1 = plt.subplots()
+    ax1.bar(ind, pop10['Answers'], color = plt.rcParams['axes.color_cycle'][0], label = 'Answers')
+    ax1.bar(ind, pop10['Clues'], bottom = pop10['Answers'], color = plt.rcParams['axes.color_cycle'][1], label = 'Clues')
+    ax1.bar(ind, pop10['Categories'], bottom = pop10['Answers']+pop10['Clues'], color = plt.rcParams['axes.color_cycle'][2], label = 'Categories')
+    
+    
+    plt.xlabel('Cities')
+    plt.ylabel('Number of Mentions')
+    cities = list(pop10['City'])
+    cities = [str(x) for x in cities]
+    y = [x+0.25 for x in ind]
+    plt.xticks(y, cities, rotation=60)
+    #plt.ylim(0,4000)
+    
+    ax2 = ax1.twinx()
+    z = [x+0.5 for x in ind]
+    ax2.plot(z, pop10['pop']/1000000, label = 'Population', linewidth = 4, color = plt.rcParams['axes.color_cycle'][4])
+    ax2.set_ylabel('Population in Millions')
+    
+    ax1.set_yticks(np.linspace(ax1.get_ybound()[0], ax1.get_ybound()[1], 5))
+    ax2.set_yticks(np.linspace(ax2.get_ybound()[0], ax2.get_ybound()[1], 5))
+    #ax2.set_ylim(0,9.1)
+    
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1+h2, l1+l2, loc=1)
+    
+    
+    plt.gcf().subplots_adjust(bottom=0.24)
+    
+    plt.title('10 Most Mentioned US Cities in Jeopardy (1983-2016)')
+    #plt.show()
+    plt.savefig('top10cities.png', dpi=500)
 
-city_results['total_mentions'] = city_results['Answers'] + city_results['Clues']  + city_results['Categories'] 
+def jep_sport_word_count():
+    start = time.clock()
+    
+    # 36x faster to import the csv rather than an xlsx file
+    jep_df = pd.read_csv('total_scrape_1.csv')
+    sports5 = ['baseball', 'basketball', 'soccer', 'football', 'hockey']
+    
+    categories = list(jep_df['Category'])
+    lc_cats = [w.lower() for w in categories]
+    answers = list(jep_df['Answers'])
+    lc_answers = [w.lower() for w in answers]
+    clues = list(jep_df['Clues'])
+    lc_clues = [w.lower() for w in clues]
+    
+    jep_df['lc_clues'] = lc_clues
+    jep_df['lc_answers'] = lc_answers
+    jep_df['lc_cats'] = lc_cats
+    
+    sport_counts = []
+    sport_counts.append(['Sport', 'Answers', 'Clues', 'Categories'])
+
+    for sport in sports5:
+
+        answer_count = jep_df.lc_answers.str.contains(sport).sum()
+        clue_count = jep_df.lc_clues.str.contains(sport).sum()
+        cat_count = jep_df.lc_cats.str.contains(sport).sum()
+        
+        sport_counts.append([sport, answer_count, clue_count, cat_count])
+        
+    sport_results = pd.DataFrame(sport_counts, columns = sport_counts[0])
+    sport_results.to_csv('sport_results.csv')
+    
+    end = time.clock()
+    print (end-start)
+    
+#jep_city_word_count()
 
 
-cres = city_results.sort_values(by = 'total_mentions', ascending=False)
-pop10 = cres[0:10]
-#pop10 = city_results[city_results['pop_rank'] <=10]
+    sport_results = pd.read_csv('sport_results.csv', skiprows=1)
+    
+    sport_results['total_mentions'] = sport_results['Answers'] + sport_results['Clues']  + sport_results['Categories'] 
+    
+    ind = np.arange(5)
+    fig, ax1 = plt.subplots()
+    ax1.bar(ind, sport_results['Answers'], color = plt.rcParams['axes.color_cycle'][0], label = 'Answers')
+    ax1.bar(ind, sport_results['Clues'], bottom = sport_results['Answers'], color = plt.rcParams['axes.color_cycle'][1], label = 'Clues')
+    ax1.bar(ind, sport_results['Categories'], bottom = sport_results['Answers']+sport_results['Clues'], color = plt.rcParams['axes.color_cycle'][2], label = 'Categories')
+    
+    plt.xlabel('Sport')
+    plt.ylabel('Number of Mentions')
+    cities = list(sport_results['Sport'])
+    cities = [str(x) for x in cities]
+    y = [x+0.25 for x in ind]
+    plt.xticks(y, cities, rotation=60)
+    #plt.ylim(0,4000)
+    
+#    ax2 = ax1.twinx()
+#    z = [x+0.5 for x in ind]
+#    ax2.plot(z, pop10['pop']/1000000, label = 'Population', linewidth = 4, color = plt.rcParams['axes.color_cycle'][4])
+#    ax2.set_ylabel('Population in Millions')
+#    
+    #ax1.set_yticks(np.linspace(ax1.get_ybound()[0], ax1.get_ybound()[1], 5))
+    #ax2.set_yticks(np.linspace(ax2.get_ybound()[0], ax2.get_ybound()[1], 5))
+    #ax2.set_ylim(0,9.1)
+    
+    #h1, l1 = ax1.get_legend_handles_labels()
+    #h2, l2 = ax2.get_legend_handles_labels()
+    #ax1.legend(h1+h2, l1+l2, loc=1)
+    plt.legend()
+    
+    
+    plt.gcf().subplots_adjust(bottom=0.18)
+    
+    plt.title('Mentions of Top 5 Sports in Jeopardy (1983-2016)')
+    #plt.show()
+    plt.savefig('sports5.png', dpi=500)
 
-ind = np.arange(10)
-fig, ax1 = plt.subplots()
-ax1.bar(ind, pop10['Answers'], color = plt.rcParams['axes.color_cycle'][0], label = 'Answers')
-ax1.bar(ind, pop10['Clues'], bottom = pop10['Answers'], color = plt.rcParams['axes.color_cycle'][1], label = 'Clues')
-ax1.bar(ind, pop10['Categories'], bottom = pop10['Answers']+pop10['Clues'], color = plt.rcParams['axes.color_cycle'][2], label = 'Categories')
-
-
-plt.xlabel('Cities')
-plt.ylabel('Number of Mentions')
-cities = list(pop10['City'])
-cities = [str(x) for x in cities]
-y = [x+0.25 for x in ind]
-plt.xticks(y, cities, rotation=60)
-#plt.ylim(0,4000)
-
-ax2 = ax1.twinx()
-z = [x+0.5 for x in ind]
-ax2.plot(z, pop10['pop']/1000000, label = 'Population', linewidth = 4, color = plt.rcParams['axes.color_cycle'][4])
-ax2.set_ylabel('Population in Millions')
-
-ax1.set_yticks(np.linspace(ax1.get_ybound()[0], ax1.get_ybound()[1], 5))
-ax2.set_yticks(np.linspace(ax2.get_ybound()[0], ax2.get_ybound()[1], 5))
-#ax2.set_ylim(0,9.1)
-
-h1, l1 = ax1.get_legend_handles_labels()
-h2, l2 = ax2.get_legend_handles_labels()
-ax1.legend(h1+h2, l1+l2, loc=1)
-
-
-plt.gcf().subplots_adjust(bottom=0.24)
-
-plt.title('10 Most Mentioned US Cities in Jeopardy (1983-2016)')
-#plt.show()
-plt.savefig('top10cities.png', dpi=500)
-
-
-
-
+jep_sport_word_count()
 
