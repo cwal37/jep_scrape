@@ -117,7 +117,7 @@ def jep_sport_word_count():
     
     # 36x faster to import the csv rather than an xlsx file
     jep_df = pd.read_csv('total_scrape_1.csv')
-    sports5 = ['baseball', 'basketball', 'soccer', 'football', 'hockey']
+    sports5 = {'baseball':140, 'basketball':69, 'soccer':20, 'football':96, 'hockey':98}
     
     categories = list(jep_df['Category'])
     lc_cats = [w.lower() for w in categories]
@@ -131,7 +131,7 @@ def jep_sport_word_count():
     jep_df['lc_cats'] = lc_cats
     
     sport_counts = []
-    sport_counts.append(['Sport', 'Answers', 'Clues', 'Categories'])
+    sport_counts.append(['Sport', 'Age', 'Answers', 'Clues', 'Categories'])
 
     for sport in sports5:
 
@@ -139,26 +139,26 @@ def jep_sport_word_count():
         clue_count = jep_df.lc_clues.str.contains(sport).sum()
         cat_count = jep_df.lc_cats.str.contains(sport).sum()
         
-        sport_counts.append([sport, answer_count, clue_count, cat_count])
+        age = sports5[sport]
+        
+        sport_counts.append([sport, age, answer_count, clue_count, cat_count])
         
     sport_results = pd.DataFrame(sport_counts, columns = sport_counts[0])
     sport_results.to_csv('sport_results.csv')
     
     end = time.clock()
     print (end-start)
-    
-#jep_city_word_count()
-
 
     sport_results = pd.read_csv('sport_results.csv', skiprows=1)
     
     sport_results['total_mentions'] = sport_results['Answers'] + sport_results['Clues']  + sport_results['Categories'] 
+    sport_results = sport_results.sort_values(by = 'total_mentions', ascending=False)
     
     ind = np.arange(5)
     fig, ax1 = plt.subplots()
-    ax1.bar(ind, sport_results['Answers'], color = plt.rcParams['axes.color_cycle'][0], label = 'Answers')
-    ax1.bar(ind, sport_results['Clues'], bottom = sport_results['Answers'], color = plt.rcParams['axes.color_cycle'][1], label = 'Clues')
-    ax1.bar(ind, sport_results['Categories'], bottom = sport_results['Answers']+sport_results['Clues'], color = plt.rcParams['axes.color_cycle'][2], label = 'Categories')
+    ax1.bar(ind, sport_results['Answers'], color = '#803E75', label = 'Answers', edgecolor = 'k', alpha = 0.8)
+    ax1.bar(ind, sport_results['Clues'], bottom = sport_results['Answers'], color ='#00538A', label = 'Clues', edgecolor = 'k', alpha = 0.8)
+    ax1.bar(ind, sport_results['Categories'], bottom = sport_results['Answers']+sport_results['Clues'], color = '#C10020', label = 'Categories', edgecolor = 'k', alpha = 0.8)
     
     plt.xlabel('Sport')
     plt.ylabel('Number of Mentions')
@@ -168,26 +168,27 @@ def jep_sport_word_count():
     plt.xticks(y, cities, rotation=60)
     #plt.ylim(0,4000)
     
-#    ax2 = ax1.twinx()
-#    z = [x+0.5 for x in ind]
-#    ax2.plot(z, pop10['pop']/1000000, label = 'Population', linewidth = 4, color = plt.rcParams['axes.color_cycle'][4])
-#    ax2.set_ylabel('Population in Millions')
-#    
-    #ax1.set_yticks(np.linspace(ax1.get_ybound()[0], ax1.get_ybound()[1], 5))
-    #ax2.set_yticks(np.linspace(ax2.get_ybound()[0], ax2.get_ybound()[1], 5))
-    #ax2.set_ylim(0,9.1)
+    ax2 = ax1.twinx()
+    z = [x+0.5 for x in ind]
+    ax2.plot(z, sport_results['Age'], label = 'Age of Professional League', linewidth = 4, color = 'k')# marker = 'D', markeredgecolor = 'k')
+    ax2.set_ylabel('Age of League (Years)')
     
-    #h1, l1 = ax1.get_legend_handles_labels()
-    #h2, l2 = ax2.get_legend_handles_labels()
-    #ax1.legend(h1+h2, l1+l2, loc=1)
-    plt.legend()
+    ax1.set_yticks(np.linspace(ax1.get_ybound()[0], ax1.get_ybound()[1], 5))
+    ax2.set_yticks(np.linspace(ax2.get_ybound()[0], ax2.get_ybound()[1], 5))
+    #ax2.set_ylim(0,150)
     
-    
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1+h2, l1+l2, loc=1)
+   # plt.legend()
+     
     plt.gcf().subplots_adjust(bottom=0.18)
     
-    plt.title('Mentions of Top 5 Sports in Jeopardy (1983-2016)')
+    plt.title('Mentions of Top 5 American Sports in Jeopardy w/ Professional League Ages')
     #plt.show()
     plt.savefig('sports5.png', dpi=500)
 
 jep_sport_word_count()
 
+
+    
