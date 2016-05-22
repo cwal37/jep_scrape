@@ -8,10 +8,13 @@ Created on Thu May 05 21:56:45 2016
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+
 import time
 import os
 import pdb
+
 import nltk
+from nltk.corpus import stopwords
 
 import matplotlib as mpl
 from matplotlib.font_manager import FontProperties
@@ -54,7 +57,7 @@ def jep_city_word_count():
         answer_count = jep_df.Answers.str.contains(city).sum()
         clue_count = jep_df.Clues.str.contains(city).sum()
         lc_city = city.lower()    
-        cat_count = jep_df.lc_cats.str.contains(lc_city).sum()
+        cat_count = jep_df.lc_cats.str.contains(lc_city).sum()/5
         city_counts.append([city, pop, i, answer_count, clue_count, cat_count])
         i = i +1
         
@@ -137,7 +140,7 @@ def jep_sport_word_count():
 
         answer_count = jep_df.lc_answers.str.contains(sport).sum()
         clue_count = jep_df.lc_clues.str.contains(sport).sum()
-        cat_count = jep_df.lc_cats.str.contains(sport).sum()
+        cat_count = jep_df.lc_cats.str.contains(sport).sum()/5
         
         age = sports5[sport]
         
@@ -188,7 +191,49 @@ def jep_sport_word_count():
     #plt.show()
     plt.savefig('sports5.png', dpi=500)
 
-jep_sport_word_count()
 
+def jep_word_hists():
+    jep_df = pd.read_csv('total_scrape_1.csv')
+    
+    categories = list(jep_df['Category'])
+    answers = list(jep_df['Answers'])
+    clues = list(jep_df['Clues'])
 
+    word_streams = [categories, clues, answers]  
+    #pdb.set_trace()
+    
+    vocab_names = ['categories', 'answers', 'clues']
+    i = 0
+    for word_list in word_streams:
+            
+        words = [w.lower() for w in word_list]
+        words = [word for word in words if word not in stopwords.words('english')]
+        globals()[vocab_names[i]+'_vocab'] = sorted(set(words))
+        i = i+1
+        
+def jep_pp():
+    jep_df = pd.read_csv('total_scrape_1.csv')
+    
+    categories = list(jep_df['Category'])
+    lc_cats = [w.lower() for w in categories]
+    answers = list(jep_df['Answers'])
+    lc_answers = [w.lower() for w in answers]
+    clues = list(jep_df['Clues'])
+    lc_clues = [w.lower() for w in clues]
+    
+    jep_df['lc_clues'] = lc_clues
+    jep_df['lc_answers'] = lc_answers
+    jep_df['lc_cats'] = lc_cats
+    
+    categories = list(jep_df['Category'])
+    answers = list(jep_df['Answers'])
+    clues = list(jep_df['Clues'])
+
+    answer_count = jep_df.lc_answers.str.contains('potent potables').sum()
+    clue_count = jep_df.lc_clues.str.contains('potent potables').sum()
+    cat_count = jep_df.lc_cats.str.contains('potent potables').sum()/5
+    
+    return(answer_count, clue_count, cat_count)
+    
+x,y,z = jep_pp()
     
